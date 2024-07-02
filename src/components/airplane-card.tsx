@@ -18,7 +18,7 @@ export default function AirPlaneCard({
 }: AirPlaneCardProps) {
   const defaultImage = "/images/newheroplane.jpg";
   return (
-    <Card className="w-fit ">
+    <Card className="w-fit">
       <CardContent>
         <div className="relative h-[230px] bg-background rounded-2xl mt-2">
           <Image
