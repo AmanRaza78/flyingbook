@@ -1,14 +1,25 @@
 import AirPlaneCard from "@/components/airplane-card";
-import  FilterSheet  from "@/components/filter-sheet";
+import FilterSheet from "@/components/filter-sheet";
 import Pagination from "@/components/pagination";
 import prisma from "@/lib/db";
 
-async function getData(searchParams: string) {
+async function getData(searchParams: Record<string, string>) {
+  const { page, engineType, planeModel, capacity } = searchParams;
+
+  const filters: any = {};
+  if (engineType) filters.engineType = engineType;
+  if (planeModel) filters.planeModel = planeModel;
+  if (capacity) filters.capacity = capacity;
+
   const [count, data] = await prisma.$transaction([
-    prisma.plane.count(),
+    prisma.plane.count({
+      where: filters,
+    }),
+
     prisma.plane.findMany({
+      where: filters,
       take: 10,
-      skip: searchParams ? (Number(searchParams) - 1) * 10 : 0,
+      skip: page ? (Number(page) - 1) * 10 : 0,
       select: {
         id: true,
         planeName: true,
@@ -29,9 +40,9 @@ async function getData(searchParams: string) {
 export default async function AirPlanesPage({
   searchParams,
 }: {
-  searchParams: { page: string };
+  searchParams: { [key: string]: string };
 }) {
-  const { count, data } = await getData(searchParams.page);
+  const { count, data } = await getData(searchParams);
   return (
     <div className="flex flex-col">
       <div className="mt-4 mx-10">
