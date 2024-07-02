@@ -24,10 +24,10 @@ import { PlaneFilterSchema } from "@/lib/validation";
 async function FilterPlanes(formData: FormData) {
   "use server";
   const values = Object.fromEntries(formData.entries())
-  const {engineType,planeModel,capacity} = PlaneFilterSchema.parse(values)
+  const {engineType,planeModal,capacity} = PlaneFilterSchema.parse(values)
   const searchParams = new URLSearchParams({
     ...(engineType && {engineType}),
-    ...(planeModel && {planeModel}),
+    ...(planeModal && {planeModal}),
     ...(capacity && {capacity})
   });
 
@@ -86,16 +86,16 @@ export default async function FilterSheet() {
               </Select>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="planeModel">Model</Label>
-              <Select name="planeModel">
-                <SelectTrigger id="planeModel" className="col-span-3">
+              <Label htmlFor="planeModal">Model</Label>
+              <Select name="planeModal">
+                <SelectTrigger id="planeModal" className="col-span-3">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
 
                 <SelectContent>
-                  {distinctPlaneModel.map((planeModel) => (
-                    <SelectItem value={planeModel} key={planeModel}>
-                      {planeModel}
+                  {distinctPlaneModel.map((planeModal) => (
+                    <SelectItem value={planeModal} key={planeModal}>
+                      {planeModal}
                     </SelectItem>
                   ))}
                 </SelectContent>

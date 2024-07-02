@@ -4,11 +4,11 @@ import Pagination from "@/components/pagination";
 import prisma from "@/lib/db";
 
 async function getData(searchParams: Record<string, string>) {
-  const { page, engineType, planeModel, capacity } = searchParams;
+  const { page, engineType, planeModal, capacity } = searchParams;
 
   const filters: any = {};
   if (engineType) filters.engineType = engineType;
-  if (planeModel) filters.planeModel = planeModel;
+  if (planeModal) filters.planeModal = planeModal;
   if (capacity) filters.capacity = capacity;
 
   const [count, data] = await prisma.$transaction([
